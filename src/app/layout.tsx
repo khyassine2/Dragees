@@ -47,6 +47,9 @@ export const viewport: Viewport = {
 const RootLayout = (props: { children: React.ReactNode }) => (
   <html
     lang="fr"
+    // The inline script strips `no-js` before hydration, so the class list
+    // legitimately differs from what the server rendered.
+    suppressHydrationWarning
     className={`no-js ${display.variable} ${script.variable} ${sans.variable}`}
   >
     <head>

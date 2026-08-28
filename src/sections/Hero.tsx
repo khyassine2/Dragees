@@ -106,7 +106,7 @@ export const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-svh min-h-[36rem] flex-col justify-end overflow-hidden bg-cocoa"
+      className="relative flex h-svh min-h-[36rem] flex-col overflow-hidden bg-cocoa"
     >
       <div data-hero-frame className="absolute inset-0 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -127,8 +127,11 @@ export const Hero = () => {
         />
       </div>
 
-      {/* pt clears the fixed header when the content fills a short viewport. */}
-      <div className="relative mx-auto w-full max-w-[1600px] px-4 pt-24 pb-24 text-ivory sm:px-6 sm:pt-28 sm:pb-20 lg:px-10">
+      {/*
+        pt clears the fixed header (h-16, h-20 from md) plus breathing room, so
+        the eyebrow stays below the bar even when tall content pushes upward.
+      */}
+      <div className="relative mx-auto mt-auto w-full max-w-[1600px] px-4 pt-28 pb-24 text-ivory sm:px-6 sm:pb-20 md:pt-32 lg:px-10">
         <p data-hero-eyebrow className="label-micro opacity-0">
           Fiançailles · Buffet · Décoration — Fès
         </p>
