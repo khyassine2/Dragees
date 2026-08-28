@@ -1,0 +1,156 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ivory: #fbf7f3;
+  --color-ivory-dim: #f2ebe4;
+  --color-plum: #241a1f;
+  --color-cocoa: #3a2c30;
+  --color-taupe: #7a6a6c;
+  --color-mist: #bcaeae;
+  --color-line: #e3d7cf;
+  --color-blush: #e6b7bd;
+  --color-rose: #c4788a;
+  --color-gold: #b8975a;
+
+  --font-display: var(--font-display-loaded), 'Didot', 'Times New Roman', serif;
+  --font-script: var(--font-script-loaded), 'Snell Roundhand', cursive;
+  --font-sans: var(--font-sans-loaded), system-ui, -apple-system, sans-serif;
+
+  --spacing: 8px;
+
+  --text-display: clamp(2.75rem, 10vw, 11rem);
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.02em;
+  --text-editorial: clamp(2.25rem, 6vw, 5rem);
+  --text-editorial--line-height: 1;
+  --text-editorial--letter-spacing: -0.015em;
+  --text-section: clamp(1.75rem, 4vw, 3rem);
+  --text-section--line-height: 1.05;
+  --text-section--letter-spacing: -0.01em;
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.2;
+  --text-micro--letter-spacing: 0.18em;
+
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-plum);
+    font-family: var(--font-sans);
+    overscroll-behavior-y: none;
+    /* Wide content scrolls inside its own box; the page never sideways. */
+    overflow-x: hidden;
+  }
+
+  /* Lenis owns the scroll; native smooth scrolling would fight it. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  ::selection {
+    background-color: var(--color-rose);
+    color: var(--color-ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-rose);
+    outline-offset: 3px;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .skip-link {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 300;
+    padding: 8px 16px;
+    background-color: var(--color-plum);
+    color: var(--color-ivory);
+    font-size: var(--text-micro);
+    letter-spacing: var(--text-micro--letter-spacing);
+    text-transform: uppercase;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+
+  .label-micro {
+    font-size: var(--text-micro);
+    line-height: var(--text-micro--line-height);
+    letter-spacing: var(--text-micro--letter-spacing);
+    text-transform: uppercase;
+  }
+
+  .split-line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .split-line > span {
+    display: block;
+    will-change: transform;
+  }
+}
+
+/*
+ * Reveal animations start from opacity-0, so a page whose JS never runs would
+ * render blank. GSAP sets the inline opacity it animates, which outranks this
+ * rule, so the content still animates normally when scripting works.
+ */
+.no-js [data-hero-eyebrow],
+.no-js [data-hero-script],
+.no-js [data-hero-statement],
+.no-js [data-hero-cta],
+.no-js [data-hero-scroll],
+.no-js [data-reveal-text],
+.no-js [data-reveal-fade],
+.no-js [data-booking-block],
+.no-js h1[class*='opacity-0'] {
+  opacity: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* The custom cursor replaces the native one only on precise pointers. */
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
